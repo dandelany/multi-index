@@ -59,7 +59,6 @@ var MultiIndexList = (function () {
                         return [item[indexKey], i];
                     }));
                 });
-                //console.log(this.listIndexMaps);
                 return this;
             },
             writable: true,
@@ -79,7 +78,6 @@ var MultiIndexList = (function () {
                     });
                     _this.listIndexMaps[groupKey] = listIndexMap;
                 });
-                //console.log(this.listIndexMaps);
                 return this;
             },
             writable: true,
@@ -127,6 +125,7 @@ var MultiIndexList = (function () {
         updateBy: {
             value: function updateBy(key, keyValue, value) {
                 // todo handle groups, this only works for indices
+                // todo have two different methods, one for 'extend' and one for 'set'?
                 this.list.splice(this.listIndexBy(key)[keyValue], 1, value);
                 this.refresh();
             },

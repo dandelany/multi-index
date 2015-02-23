@@ -1,5 +1,4 @@
 # multi-index
-#### by dandelany
 
 ### Introduction
 

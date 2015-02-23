@@ -1,6 +1,6 @@
 
 var should = require('should');
-var MultiIndexList = require('../build/multi-index');
+var MultiIndexList = require('../dist/multi-index');
 var _ = require('lodash');
 
 var peopleList = [

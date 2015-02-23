@@ -26,7 +26,6 @@ class MultiIndexList {
             this.maps[indexKey] = _.indexBy(this.list, indexKey);
             this.listIndexMaps[indexKey] = _.object(_.map(this.list, (item, i) => [item[indexKey], i]));
         });
-        //console.log(this.listIndexMaps);
         return this;
     }
     regroup() {
@@ -40,7 +39,6 @@ class MultiIndexList {
             });
             this.listIndexMaps[groupKey] = listIndexMap;
         });
-        //console.log(this.listIndexMaps);
         return this;
     }
     refresh() { this.reindex().regroup(); }
@@ -61,6 +59,7 @@ class MultiIndexList {
     }
     updateBy(key, keyValue, value) {
         // todo handle groups, this only works for indices
+        // todo have two different methods, one for 'extend' and one for 'set'?
         this.list.splice(this.listIndexBy(key)[keyValue], 1, value);
         this.refresh();
     }

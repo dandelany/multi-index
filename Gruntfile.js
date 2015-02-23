@@ -9,7 +9,6 @@ module.exports = function(grunt) {
     var config = {
         src: 'src',
         dist: 'dist',
-        build: 'build',
         jsToBuild: ['src/multi-index.js']
     };
 
@@ -22,89 +21,10 @@ module.exports = function(grunt) {
             build: {
                 files: [{
                     dot: true,
-                    src: ['<%= config.build %>/*', '!<%= config.build %>/.git*']
+                    src: ['<%= config.dist %>/*', '!<%= config.dist %>/.git*']
                 }]
             }
         },
-
-        // copy static asset files from src/ to build/[dev or dist]
-        //copy: {
-        //    dev: {
-        //        files: [
-        //            {
-        //                expand: true,
-        //                dot: true,
-        //                cwd: config.src,
-        //                dest: config.build,
-        //                src: config.filesToCopy
-        //            }
-        //        ]
-        //    },
-        //    dist: {
-        //        files: [
-        //            {
-        //                expand: true,
-        //                dot: true,
-        //                cwd: config.src,
-        //                dest: config.buildDist,
-        //                src: config.filesToCopy
-        //            }
-        //        ]
-        //    }
-        //},
-        //
-        // bundle JS with browserify
-        //browserify: {
-        //    dev: {
-        //        options: {
-        //            transform: ['babelify'],
-        //            browserifyOptions: {debug: true}
-        //        },
-        //        files: makeBuildSrcPathObj(config.jsToBuild, config.buildDev)
-        //    },
-        //    dist: {
-        //        options: {
-        //            transform: ['babelify'],
-        //        },
-        //        files: makeBuildSrcPathObj(config.jsToBuild, config.buildDist)
-        //    }
-        //},
-        //
-        //// compile LESS to CSS
-        //less: {
-        //    dev: {
-        //        files: makeBuildSrcPathObj(config.lessToBuild, config.buildDev)
-        //    },
-        //    dist: {
-        //        options: {
-        //            cleancss: true
-        //        },
-        //        files: makeBuildSrcPathObj(config.lessToBuild, config.buildDist)
-        //    }
-        //},
-        //
-        //// run uglify on JS to minify it
-        //uglify: {
-        //    dist: {
-        //        files: makeBuildBuildPathObj(config.jsToBuild, config.buildDist)
-        //    }
-        //},
-
-        //// web server for serving files from build/[dev or dist]
-        //connect: {
-        //    dev: {
-        //        options: {
-        //            port: '4949',
-        //            base: config.buildDev
-        //        }
-        //    },
-        //    dist: {
-        //        options: {
-        //            port: '4949',
-        //            base: config.buildDist
-        //        }
-        //    }
-        //},
 
         babel: {
             options: {
@@ -112,8 +32,14 @@ module.exports = function(grunt) {
             },
             build: {
                 files: {
-                    "build/multi-index.js": "src/multi-index.js"
+                    "dist/multi-index.js": "src/multi-index.js"
                 }
+            }
+        },
+
+        simplemocha: {
+            all: {
+                src: ['test/**/*.js']
             }
         },
 
@@ -127,60 +53,26 @@ module.exports = function(grunt) {
                 files: "src/multi-index.js",
                 tasks: ['build', 'shell:sayBuiltJs']
             }
-            //copy: {
-            //    files: [
-            //        '<%= config.src %>/{,*/}*.{gif,jpeg,jpg,png,webp,gif,ico}',
-            //        '<%= config.src %>/fonts/{,*/}*.*'
-            //    ],
-            //    tasks: ['copy:dev', 'shell:sayCopied']
-            //}
         },
 
         shell: {
-            sayBuiltJs: { command: 'say "built js" -v Cellos' },
-            sayCopied: { command: 'say "copied files" -v Cellos' }
+            //sayBuiltJs: { command: 'say "built js" -v Cellos' }, // enable talking build indicator
+            sayBuiltJs: { command: 'echo built JS' }
         }
     });
 
+    grunt.registerTask('test', 'simplemocha');
+
     grunt.registerTask('build', [
         'clean:build',
-        'babel:build'
-    ]);
-    grunt.registerTask('dev', [
-        'clean:build',
         'babel:build',
+        'test'
+    ]);
+
+    grunt.registerTask('dev', [
+        'build',
         'watch'
     ]);
 
-    // Dev tasks
-    //grunt.registerTask('buildDev', [
-    //    'clean:dev',      // clean old files out of build/dev
-    //    'copy:dev',       // copy static asset files from app/ to build/dev
-    //    'browserify:dev', // bundle JS with browserify
-    //    'less:dev',       // compile LESS to CSS
-    //]);
-    //grunt.registerTask('serveDev', [
-    //    'buildDev',
-    //    'connect:dev',     // web server for serving files from build/dev
-    //    'watch'            // watch src files for changes and rebuild when necessary
-    //]);
-    //
-    //// Distribution tasks
-    //grunt.registerTask('buildDist', [
-    //    'clean:dist',      // clean old files out of build/dist
-    //    'copy:dist',       // copy static asset files from app/ to build/dist
-    //    'browserify:dist', // bundle JS with browserify
-    //    'less:dist',       // compile LESS to CSS
-    //    'uglify:dist',     // minify JS files
-    //]);
-    //grunt.registerTask('serveDist', [
-    //    'buildDist',
-    //    'connect:dev',     // web server for serving files from build/dev
-    //    'watch'            // watch src files for changes and rebuild when necessary
-    //]);
-
-    // Task aliases
-    //grunt.registerTask('build', ['buildDist']);
-    //grunt.registerTask('serve', ['serveDev']);
-    //grunt.registerTask('debug', ['serveDev']);
+    grunt.registerTask('default', 'dev');
 };
