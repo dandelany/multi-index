@@ -76,49 +76,4 @@ class MultiIndexList {
     }
 }
 
-/*
- *
- * the idea:
- *
- *
- *
- * */
-//var edgesList = [
-//    {
-//        id: 'edge1',
-//        source: 'node1',
-//        target: 'node2'
-//    },
-//    {
-//        id: 'edge2',
-//        source: 'node2',
-//        target: 'node4'
-//    },
-//    {
-//        id: 'edge3',
-//        source: 'node3',
-//        target: 'node1'
-//    },
-//    {
-//        id: 'edge4',
-//        source: 'node3',
-//        target: 'node4'
-//    }
-//];
-//
-//var edges = new MultiIndexList(edgesList)
-//    .indexBy('id')
-//    .groupBy('source', 'target');
-//
-//var edge1 = edges.by('id').get('edge1'), // {id: 'edge1', ...}
-//    edgesBySource = edges.by('source'),
-//    withSource3 = edgesBySource.get('node3'); // [{id: 'edge3', ...}, {id: 'edge4', ...}]
-//
-//var edge5 = {id: 'edge5', source: 'node4', target: 'node1'};
-//edges.setList(edges.list().push(edge5)); // it's either this or add array prototype methods to MultiIndexList
-//
-//edges.by('id').get('edge1');
-//edges.by('id').update('edge1', {id: 'edge1', source: 'node1', target: 'node4'});
-//edges.by('id').remove('edge4');
-
 module.exports = MultiIndexList;
