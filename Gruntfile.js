@@ -57,10 +57,10 @@ module.exports = function(grunt) {
         },
 
         shell: {
-            sayBuiltJs: { command: 'say "built" -v Cellos' }, // enable talking build indicator
-            sayPassedTests: { command: 'say "passed tests" -v Cellos' } // enable talking test indicator
-            //sayBuiltJs: { command: 'echo built' },
-            //sayPassedTests: { command: 'echo passed tests' }
+            //sayBuiltJs: { command: 'say "built" -v Cellos' }, // enable talking build indicator
+            //sayPassedTests: { command: 'say "passed tests" -v Cellos' } // enable talking test indicator
+            sayBuiltJs: { command: 'echo built' },
+            sayPassedTests: { command: 'echo passed tests' }
         }
     });
 
