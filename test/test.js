@@ -62,6 +62,7 @@ describe('MultiIndexList', function() {
         
     });
 
+
     describe('reading', function() {
         
         var people;
@@ -168,8 +169,31 @@ describe('MultiIndexList', function() {
 
             newList.length.should.be.equal(origList.length);
             people.by('id').get('birdy').should.be.exactly(newBird);
+            should.not.exist(people.by('id').get('bird'));
         });
-        
+
+        it('can remove a uniquely-indexed item in the list by its index', function() {
+            var origList = people.getList();
+            people.by('id').remove('bird');
+            var newList = people.getList();
+            var developers = people.by('role').get('developer');
+
+            newList.length.should.be.equal(origList.length - 1);
+            developers.length.should.be.equal(1);
+            should.not.exist(people.by('id').get('bird'));
+        })
         
     });
+
+
+    describe('warts & gotchas', function() {
+
+        var people;
+        beforeEach(function() {
+            people = new MultiIndexList(peopleList)
+                .indexBy('id', 'badgeId')
+                .groupBy('lastName', 'role');
+        });
+
+    })
 });
