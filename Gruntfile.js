@@ -2,14 +2,11 @@ var _ = require('lodash');
 'use strict';
 
 module.exports = function(grunt) {
-
-    // Load grunt tasks automatically
     require('load-grunt-tasks')(grunt);
 
     var config = {
         src: 'src',
-        dist: 'dist',
-        jsToBuild: ['src/multi-index.js']
+        dist: 'dist'
     };
 
     grunt.initConfig({
@@ -52,12 +49,18 @@ module.exports = function(grunt) {
             build: {
                 files: "src/multi-index.js",
                 tasks: ['build', 'shell:sayBuiltJs']
+            },
+            test: {
+                files: 'test/**/*.js',
+                tasks: ['test', 'shell:sayPassedTests']
             }
         },
 
         shell: {
-            //sayBuiltJs: { command: 'say "built js" -v Cellos' }, // enable talking build indicator
-            sayBuiltJs: { command: 'echo built JS' }
+            //sayBuiltJs: { command: 'say "built" -v Cellos' }, // enable talking build indicator
+            //sayPassedTests: { command: 'say "passed tests" -v Cellos' } // enable talking test indicator
+            sayBuiltJs: { command: 'echo built' },
+            sayPassedTests: { command: 'echo passed tests' }
         }
     });
 
